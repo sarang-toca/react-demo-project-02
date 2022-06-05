@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import Button from "react-bootstrap/Button";
 
-import Layout from 'common/Layout';
-import { pushNotification } from 'utils/notifications';
-import Texts from 'constants/staticText';
+import Layout from "common/Layout";
+import { pushNotification } from "utils/notifications";
+import Texts from "constants/staticText";
 
-import { getList } from 'actions/Auth';
+import { getList } from "actions/Auth";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -19,13 +19,13 @@ const Home = (props) => {
     <Layout>
       <Button
         onClick={() => dispatch(getList())}
-        style={{ marginTop: '250px' }}
+        style={{ marginTop: "250px" }}
       >
         {Texts.CHECK_API_CALL}
       </Button>
       <Button
-        onClick={() => pushNotification('test', 'success')}
-        style={{ marginTop: '250px' }}
+        onClick={() => pushNotification("test", "success")}
+        style={{ marginTop: "250px" }}
       >
         {Texts.GET_NOTIFCATION}
       </Button>

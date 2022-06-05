@@ -1,13 +1,14 @@
-import React from 'react';
+import React from "react";
+import "./footer.css";
 
 const Footer = (props) => (
   <footer className="app-footer">
     <div>
-      <a href="https://systango.com">Systango</a>
-      <span>&copy; 2019 Systango Labs.</span>
+      <a href="https://www.topsinfosolutions.com/">TOPS Infosolutions</a>
+      <span>&copy; 2022 TOPS Group.</span>
     </div>
-    <div className="ml-auto">
-      <span>Powered by</span>
+    <div>
+      <span>Powered by Electricity!</span>
     </div>
   </footer>
 );
