@@ -1,14 +1,36 @@
-import { GET_LIST, GET_LIST_SUCCESS, GET_LIST_FAILURE } from './actionTypes';
+import * as actionTypes from "./actionTypes";
+
+// SignUp action creators
+// POST_USER_DATA = "POST_USER_DATA";
+// export const POST_USER_SUCCESS = "POST_USER_SUCCESS";
+// export const POST_USER_FAILURE = "POST_USER_FAILURE";
+export const postUserData = () => {
+  return {
+    type: actionTypes.POST_USER_DATA,
+  };
+};
+export const postUserSuccess = (user) => {
+  return {
+    type: actionTypes.POST_USER_SUCCESS,
+    payload: user,
+  };
+};
+export const postUserFailure = (error) => {
+  return {
+    type: actionTypes.POST_USER_FAILURE,
+    payload: error,
+  };
+};
 
 export const getList = () => ({
-  type: GET_LIST,
+  type: actionTypes.GET_LIST,
 });
 
 export const getListSuccess = (data) => ({
-  type: GET_LIST_SUCCESS,
+  type: actionTypes.GET_LIST_SUCCESS,
   payload: data,
 });
 
 export const getListFailure = () => ({
-  type: GET_LIST_FAILURE,
+  type: actionTypes.GET_LIST_FAILURE,
 });

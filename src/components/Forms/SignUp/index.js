@@ -3,6 +3,7 @@ import useInput from "hooks/use-input";
 import { Avatar, Paper, Stack, TextField, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
+import { signup } from "actions/Auth/authActions";
 
 const SignUpPage = () => {
   const {
@@ -30,14 +31,14 @@ const SignUpPage = () => {
   } = useInput((value) => value.trim().length >= 4);
 
   const userData = {
-    userName: enteredUserName,
+    name: enteredUserName,
     email: enteredEmail,
     password: enteredPassword,
   };
 
   const signupHandler = (e) => {
     e.preventDefault();
-    console.log(userData);
+    signup(userData);
     resetUserNameInput();
     resetEmailInput();
     resetPasswordInput();
