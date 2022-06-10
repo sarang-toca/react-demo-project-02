@@ -30,7 +30,7 @@ const SignUpPage = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
-  } = useInput((value) => value.trim().length >= 4);
+  } = useInput((value) => value.trim().length > 7);
 
   const userData = {
     name: enteredUserName,
