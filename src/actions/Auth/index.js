@@ -1,9 +1,7 @@
 import * as actionTypes from "./actionTypes";
 
 // SignUp action creators
-// POST_USER_DATA = "POST_USER_DATA";
-// export const POST_USER_SUCCESS = "POST_USER_SUCCESS";
-// export const POST_USER_FAILURE = "POST_USER_FAILURE";
+
 export const postUserData = () => {
   return {
     type: actionTypes.POST_USER_DATA,
@@ -21,6 +19,8 @@ export const postUserFailure = (error) => {
     payload: error,
   };
 };
+
+// unknown action creators
 
 export const getList = () => ({
   type: actionTypes.GET_LIST,

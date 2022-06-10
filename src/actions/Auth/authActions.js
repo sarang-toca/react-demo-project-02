@@ -3,28 +3,21 @@ import { toast } from "react-toastify";
 import { GET_USERS } from "./actionTypes";
 import * as actions from "./index";
 
-export const signup = (user) => {
-  // console.log("................", user);
-  api.post(`v1/auth/register`, user).then((token) => {
-    //  localStorage.setItem("token", token.data.tokens.access.token);
-    // localStorage.setItem("Refresh Token", token.data.tokens.refresh.token);
-    console.log("checking token111", token);
-  });
-
+export const signUp = (user) => {
   return (dispatch) => {
-    dispatch(actions.postUserData);
+    dispatch(actions.postUserData());
     api
       .post(`v1/auth/register`, user)
       .then((token) => {
         //  localStorage.setItem("token", token.data.tokens.access.token);
         // localStorage.setItem("Refresh Token", token.data.tokens.refresh.token);
         console.log("checking token", token);
-        dispatch(actions.getListSuccess(token));
+        dispatch(actions.postUserSuccess(token));
       })
       .catch((error) => {
         const errorMessage = error.response.data.message;
         dispatch(actions.postUserFailure(errorMessage));
-        // console.log(error.response.data.message)
+        // console.log(errorMessage)
         toast.error(error.response?.data.message, {
           position: toast.POSITION.TOP_RIGHT,
         });

@@ -3,9 +3,11 @@ import useInput from "hooks/use-input";
 import { Avatar, Paper, Stack, TextField, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
-import { signup } from "actions/Auth/authActions";
+import { signUp } from "actions/Auth/authActions";
+import { useSelector } from "react-redux";
 
 const SignUpPage = () => {
+  const data = useSelector((state) => state.auth);
   const {
     value: enteredUserName,
     hasError: userNameInputHasError,
@@ -38,10 +40,11 @@ const SignUpPage = () => {
 
   const signupHandler = (e) => {
     e.preventDefault();
-    signup(userData);
+    signUp(userData);
     resetUserNameInput();
     resetEmailInput();
     resetPasswordInput();
+    console.log(data);
   };
 
   return (

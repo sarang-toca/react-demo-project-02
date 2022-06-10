@@ -1,4 +1,3 @@
-// GET_LIST_FAILURE,
 import * as actionTypes from "../actions/Auth/actionTypes";
 
 const initialState = {
@@ -23,6 +22,7 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.POST_USER_SUCCESS: {
       const token = action.payload.tokens.access.token;
       const user = action.payload.user;
+      console.log(token, user);
       return {
         ...state,
         loading: false,
@@ -30,7 +30,7 @@ const authReducer = (state = initialState, action) => {
           id: user.id,
           name: user.name,
           email: user.email,
-          token: token,
+          token,
         },
       };
     }
@@ -44,6 +44,8 @@ const authReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default authReducer;
 
 // const signUp = (state, action) => {
 //   const token = action.payload.tokens.access.token;
@@ -95,5 +97,4 @@ const authReducer = (state = initialState, action) => {
 //       return state;
 //   }
 // };
-
-export default authReducer;
+// export default authReducer;
