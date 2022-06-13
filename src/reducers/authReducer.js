@@ -2,6 +2,7 @@ import * as actionTypes from "../actions/Auth/actionTypes";
 
 const initialState = {
   loading: false,
+  isLoggedIn: false,
   user: {
     id: "",
     name: "",
@@ -9,7 +10,7 @@ const initialState = {
     token: "",
   },
   users: [],
-  error: null,
+  error: "",
 };
 
 const authReducer = (state = initialState, action) => {
@@ -20,12 +21,13 @@ const authReducer = (state = initialState, action) => {
         loading: true,
       };
     case actionTypes.POST_USER_SUCCESS: {
-      const token = action.payload.tokens.access.token;
-      const user = action.payload.user;
+      const token = action.payload.data.tokens.access.token;
+      const user = action.payload.data.user;
       console.log(token, user);
       return {
         ...state,
         loading: false,
+        isLoggedIn: true,
         user: {
           id: user.id,
           name: user.name,
@@ -34,12 +36,15 @@ const authReducer = (state = initialState, action) => {
         },
       };
     }
-    case actionTypes.GET_LIST_FAILURE:
+    case actionTypes.POST_USER_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
+    case actionTypes.USER_LOGOUT: {
+      return initialState;
+    }
     default:
       return state;
   }

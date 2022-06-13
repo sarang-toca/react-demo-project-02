@@ -20,6 +20,14 @@ export const postUserFailure = (error) => {
   };
 };
 
+// Logout action creators
+
+export const userLogout = () => {
+  return {
+    type: actionTypes.USER_LOGOUT,
+  };
+};
+
 // unknown action creators
 
 export const getList = () => ({
