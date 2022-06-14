@@ -1,18 +1,9 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+useSelector(state=>state)
 
 // eslint-disable-next-line react/prop-types
-export function PrivateRoute({ component: Component, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        localStorage.getItem("token") ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/login" }} />
-        )
-      }
-    />
-  );
+export function PrivateRoute() {
+  return localStorage.getItem("token") ? <Navigate to='/dashboard' /> : <Navigate to='/' /> 
 }

@@ -1,153 +1,177 @@
 import api from "../../service/api";
 import { toast } from "react-toastify";
-import { GET_USERS } from "./actionTypes";
 import * as actions from "./index";
 
 export const signUp = (user) => {
   return (dispatch) => {
-    dispatch(actions.postUserData());
+    dispatch(actions.userSignupRequest());
     api
       .post(`v1/auth/register`, user)
       .then((token) => {
-        //  localStorage.setItem("token", token.data.tokens.access.token);
-        // localStorage.setItem("Refresh Token", token.data.tokens.refresh.token);
-        console.log("checking token", token);
-        dispatch(actions.postUserSuccess(token));
+        localStorage.setItem("token", token.data.tokens.access.token);
+        dispatch(actions.userSignupSuccess(token));
       })
       .catch((error) => {
-        const errorMessage = error.response.data.message;
-        dispatch(actions.postUserFailure(errorMessage));
-        // console.log(errorMessage)
-        toast.error(error.response?.data.message, {
+        const errorMessage = error.message;
+        dispatch(actions.userSignupFailure(errorMessage));
+        console.log(error);
+        toast.error(error.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
       });
   };
 };
 
-export const signIn = (email, password) => {
-  // console.log("..................", email,password)
+export const signIn = (user) => {
   return (dispatch) => {
+    dispatch(actions.userLoginRequest());
     api
-      .post(`/auth/login`, { email, password })
+      .post(`v1/auth/login`, user)
       .then((token) => {
-        // localStorage.setItem("token", token.data.tokens.access.token);
-        dispatch({
-          type: "SIGN_IN",
-          payload: token.data,
-        });
+        localStorage.setItem("token", token.data.tokens.access.token);
+        dispatch(actions.userLoginSuccess(token));
       })
       .catch((error) => {
-        console.log(error.response);
-
-        toast.error(error.response?.data.message, {
+        const errorMessage = error.message;
+        dispatch(actions.userLoginFailure(errorMessage));
+        console.log(error);
+        toast.error(error.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
       });
   };
 };
 
-export const loadUser = () => {
-  return (dispatch, getState) => {
-    const token = getState().auth.token;
-    // console.log("load User token data", token);
-    if (token) {
-      dispatch({
-        type: "USER_LOADED",
-        token,
-      });
-    } else return null;
-  };
-};
-
-export const signOut = () => {
+export const logOut = () => {
+  localStorage.removeItem("token");
   return (dispatch) => {
-    dispatch({
-      type: "SIGN_OUT",
-    });
+    dispatch(actions.userLogout());
   };
 };
 
-export const getUsers = (data) => {
-  return {
-    type: GET_USERS,
-    payload: data,
-  };
-};
+// export const signIn = (email, password) => {
+//   // console.log("..................", email,password)
+//   return (dispatch) => {
+//     api
+//       .post(`/auth/login`, { email, password })
+//       .then((token) => {
+//         // localStorage.setItem("token", token.data.tokens.access.token);
+//         dispatch({
+//           type: "SIGN_IN",
+//           payload: token.data,
+//         });
+//       })
+//       .catch((error) => {
+//         console.log(error.response);
 
-export const userDeleted = () => {
-  return {
-    type: "DELETE_USER",
-  };
-};
+//         toast.error(error.response?.data.message, {
+//           position: toast.POSITION.TOP_RIGHT,
+//         });
+//       });
+//   };
+// };
 
-export const userAdded = () => {
-  return {
-    type: "ADDED_USER",
-  };
-};
+// export const loadUser = () => {
+//   return (dispatch, getState) => {
+//     const token = getState().auth.token;
+//     // console.log("load User token data", token);
+//     if (token) {
+//       dispatch({
+//         type: "USER_LOADED",
+//         token,
+//       });
+//     } else return null;
+//   };
+// };
 
-export const userEdited = (data) => {
-  return {
-    type: "EDITED_USER",
-    payload: data,
-  };
-};
+// export const signOut = () => {
+//   return (dispatch) => {
+//     dispatch({
+//       type: "SIGN_OUT",
+//     });
+//   };
+// };
 
-export const getDetails = () => async (dispatch) => {
-  try {
-    const response = await api.get("/users");
-    console.log(response);
-    dispatch(getUsers(response.data.results));
-  } catch (error) {
-    console.log(error);
-    toast.error(error.response?.data.message, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
-};
+// export const getUsers = (data) => {
+//   return {
+//     type: GET_USERS,
+//     payload: data,
+//   };
+// };
 
-export const deleteUser = (id) => async (dispatch) => {
-  try {
-    const response = await api.delete(`/users/${id}`);
-    console.log("response", response);
-    dispatch(userDeleted(response));
-    dispatch(getDetails());
-  } catch (error) {
-    console.log(error);
-    toast.error(error.response?.data.message, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
-};
+// export const userDeleted = () => {
+//   return {
+//     type: "DELETE_USER",
+//   };
+// };
 
-export const addUser = (user) => async (dispatch) => {
-  try {
-    const response = await api.post("/users", user);
-    console.log("response", response);
-    dispatch(userAdded(response));
-    dispatch(getDetails());
-  } catch (error) {
-    console.log(error);
-    toast.error(error.response?.data.message, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
-};
+// export const userAdded = () => {
+//   return {
+//     type: "ADDED_USER",
+//   };
+// };
 
-export const editUser = (id, user) => async (dispatch) => {
-  try {
-    const response = await api.patch(`/users/${id}`, user);
-    console.log("response", response);
-    dispatch(userEdited(response));
-    dispatch(getDetails());
-  } catch (error) {
-    console.log(error);
-    toast.error(error.response?.data.message, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
-};
+// export const userEdited = (data) => {
+//   return {
+//     type: "EDITED_USER",
+//     payload: data,
+//   };
+// };
+
+// export const getDetails = () => async (dispatch) => {
+//   try {
+//     const response = await api.get("/users");
+//     console.log(response);
+//     dispatch(getUsers(response.data.results));
+//   } catch (error) {
+//     console.log(error);
+//     toast.error(error.response?.data.message, {
+//       position: toast.POSITION.TOP_RIGHT,
+//     });
+//   }
+// };
+
+// export const deleteUser = (id) => async (dispatch) => {
+//   try {
+//     const response = await api.delete(`/users/${id}`);
+//     console.log("response", response);
+//     dispatch(userDeleted(response));
+//     dispatch(getDetails());
+//   } catch (error) {
+//     console.log(error);
+//     toast.error(error.response?.data.message, {
+//       position: toast.POSITION.TOP_RIGHT,
+//     });
+//   }
+// };
+
+// export const addUser = (user) => async (dispatch) => {
+//   try {
+//     const response = await api.post("/users", user);
+//     console.log("response", response);
+//     dispatch(userAdded(response));
+//     dispatch(getDetails());
+//   } catch (error) {
+//     console.log(error);
+//     toast.error(error.response?.data.message, {
+//       position: toast.POSITION.TOP_RIGHT,
+//     });
+//   }
+// };
+
+// export const editUser = (id, user) => async (dispatch) => {
+//   try {
+//     const response = await api.patch(`/users/${id}`, user);
+//     console.log("response", response);
+//     dispatch(userEdited(response));
+//     dispatch(getDetails());
+//   } catch (error) {
+//     console.log(error);
+//     toast.error(error.response?.data.message, {
+//       position: toast.POSITION.TOP_RIGHT,
+//     });
+//   }
+// };
 // export const signIn =(token)=>{
 //   return{
 //     type: "SIGN_IN",

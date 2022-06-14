@@ -2,44 +2,54 @@ import * as actionTypes from "../actions/Auth/actionTypes";
 
 const initialState = {
   loading: false,
+  isLoggedIn: false,
   user: {
     id: "",
     name: "",
     email: "",
     token: "",
+    role: "",
   },
   users: [],
-  error: null,
+  error: "",
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.POST_USER_DATA:
+    case actionTypes.USER_SIGNUP_REQUEST:
+    case actionTypes.USER_LOGIN_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case actionTypes.POST_USER_SUCCESS: {
-      const token = action.payload.tokens.access.token;
-      const user = action.payload.user;
+    case actionTypes.USER_SIGNUP_SUCCESS:
+    case actionTypes.USER_LOGIN_SUCCESS: {
+      const token = action.payload.data.tokens.access.token;
+      const user = action.payload.data.user;
       console.log(token, user);
       return {
         ...state,
         loading: false,
+        isLoggedIn: true,
         user: {
           id: user.id,
           name: user.name,
           email: user.email,
+          role: user.role,
           token,
         },
       };
     }
-    case actionTypes.GET_LIST_FAILURE:
+    case actionTypes.USER_SIGNUP_FAILURE:
+    case actionTypes.USER_LOGIN_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
+    case actionTypes.USER_LOGOUT: {
+      return initialState;
+    }
     default:
       return state;
   }

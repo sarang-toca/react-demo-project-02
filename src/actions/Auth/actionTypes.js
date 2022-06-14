@@ -1,7 +1,17 @@
 // SignUp action types
-export const POST_USER_DATA = "POST_USER_DATA";
-export const POST_USER_SUCCESS = "POST_USER_SUCCESS";
-export const POST_USER_FAILURE = "POST_USER_FAILURE";
+export const USER_SIGNUP_REQUEST = "USER_SIGNUP_REQUEST";
+export const USER_SIGNUP_SUCCESS = "USER_SIGNUP_SUCCESS";
+export const USER_SIGNUP_FAILURE = "USER_SIGNUP_FAILURE";
+
+// LogIn action types
+
+export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
+export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
+export const USER_LOGIN_FAILURE = "USER_LOGIN_FAILURE";
+
+// Logout action type
+
+export const USER_LOGOUT = "USER_LOGOUT";
 
 // unknown action types
 export const GET_USERS = "GET_USERS";

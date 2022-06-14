@@ -4,6 +4,7 @@ import { interceptor } from "utils/interceptor";
 import Layout from "common/Layout";
 import SignUpPage from "components/Forms/SignUp";
 import LogInPage from "components/Forms/LogIn";
+import UserDashboard from "components/Dashboard";
 
 export default function App() {
   interceptor();
@@ -11,7 +12,8 @@ export default function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<LogInPage />} />
-        <Route path="signup" element={<SignUpPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
       </Routes>
     </Layout>
   );

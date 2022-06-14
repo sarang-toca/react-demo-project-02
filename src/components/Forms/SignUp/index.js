@@ -1,13 +1,14 @@
 import React from "react";
 import useInput from "hooks/use-input";
+import { useDispatch } from "react-redux";
 import { Avatar, Paper, Stack, TextField, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
-import "./SignUp.css";
+import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "actions/Auth/authActions";
-import { useSelector } from "react-redux";
+import "./SignUp.css";
 
 const SignUpPage = () => {
-  const data = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     value: enteredUserName,
     hasError: userNameInputHasError,
@@ -30,7 +31,7 @@ const SignUpPage = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
-  } = useInput((value) => value.trim().length >= 4);
+  } = useInput((value) => value.trim().length > 7);
 
   const userData = {
     name: enteredUserName,
@@ -40,11 +41,11 @@ const SignUpPage = () => {
 
   const signupHandler = (e) => {
     e.preventDefault();
-    signUp(userData);
+    dispatch(signUp(userData));
     resetUserNameInput();
     resetEmailInput();
     resetPasswordInput();
-    console.log(data);
+    navigate("/dashboard");
   };
 
   return (
