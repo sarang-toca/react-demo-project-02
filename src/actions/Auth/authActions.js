@@ -4,16 +4,36 @@ import * as actions from "./index";
 
 export const signUp = (user) => {
   return (dispatch) => {
-    dispatch(actions.postUserData());
+    dispatch(actions.userSignupRequest());
     api
       .post(`v1/auth/register`, user)
       .then((token) => {
         localStorage.setItem("token", token.data.tokens.access.token);
-        dispatch(actions.postUserSuccess(token));
+        dispatch(actions.userSignupSuccess(token));
       })
       .catch((error) => {
         const errorMessage = error.message;
-        dispatch(actions.postUserFailure(errorMessage));
+        dispatch(actions.userSignupFailure(errorMessage));
+        console.log(error);
+        toast.error(error.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
+  };
+};
+
+export const signIn = (user) => {
+  return (dispatch) => {
+    dispatch(actions.userLoginRequest());
+    api
+      .post(`v1/auth/login`, user)
+      .then((token) => {
+        localStorage.setItem("token", token.data.tokens.access.token);
+        dispatch(actions.userLoginSuccess(token));
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        dispatch(actions.userLoginFailure(errorMessage));
         console.log(error);
         toast.error(error.message, {
           position: toast.POSITION.TOP_RIGHT,

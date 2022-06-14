@@ -8,6 +8,7 @@ const initialState = {
     name: "",
     email: "",
     token: "",
+    role: "",
   },
   users: [],
   error: "",
@@ -15,12 +16,14 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.POST_USER_DATA:
+    case actionTypes.USER_SIGNUP_REQUEST:
+    case actionTypes.USER_LOGIN_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case actionTypes.POST_USER_SUCCESS: {
+    case actionTypes.USER_SIGNUP_SUCCESS:
+    case actionTypes.USER_LOGIN_SUCCESS: {
       const token = action.payload.data.tokens.access.token;
       const user = action.payload.data.user;
       console.log(token, user);
@@ -32,11 +35,13 @@ const authReducer = (state = initialState, action) => {
           id: user.id,
           name: user.name,
           email: user.email,
+          role: user.role,
           token,
         },
       };
     }
-    case actionTypes.POST_USER_FAILURE:
+    case actionTypes.USER_SIGNUP_FAILURE:
+    case actionTypes.USER_LOGIN_FAILURE:
       return {
         ...state,
         loading: false,

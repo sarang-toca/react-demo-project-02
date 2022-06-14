@@ -1,5 +1,8 @@
 import React from "react";
 import useInput from "hooks/use-input";
+import { useDispatch } from "react-redux";
+import { signIn } from "actions/Auth/authActions";
+
 import {
   Avatar,
   Paper,
@@ -10,17 +13,20 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LogIn.css";
 
 const LogInPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
-    value: enteredUserName,
-    hasError: userNameInputHasError,
-    valueChangeHandler: userNameChangeHandler,
-    inputBlurHandler: userNameBlurHandler,
-    reset: resetUserNameInput,
-  } = useInput((value) => value.trim() !== "");
+    value: enteredEmail,
+    hasError: emailInputHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetEmailInput,
+  } = useInput((value) => value.includes("@"));
 
   const {
     value: enteredPassword,
@@ -31,15 +37,16 @@ const LogInPage = () => {
   } = useInput((value) => value.trim().length >= 4);
 
   const userData = {
-    userName: enteredUserName,
+    email: enteredEmail,
     password: enteredPassword,
   };
 
   const loginHandler = (e) => {
     e.preventDefault();
-    console.log(userData);
-    resetUserNameInput();
+    dispatch(signIn(userData));
+    resetEmailInput();
     resetPasswordInput();
+    navigate("/dashboard");
   };
 
   return (
@@ -60,17 +67,17 @@ const LogInPage = () => {
         <form onSubmit={loginHandler}>
           <Stack height={"5rem"}>
             <TextField
-              label="Username"
-              placeholder="Enter user-name"
+              label="Email"
+              placeholder="Enter email"
               variant="standard"
-              value={enteredUserName}
-              onChange={userNameChangeHandler}
-              onBlur={userNameBlurHandler}
+              value={enteredEmail}
+              onChange={emailChangeHandler}
+              onBlur={emailBlurHandler}
               fullWidth
               required
-              error={userNameInputHasError}
+              error={emailInputHasError}
               helperText={
-                userNameInputHasError ? "Please enter valid username!" : ""
+                emailInputHasError ? "Please enter valid email address!" : ""
               }
             />
           </Stack>

@@ -2,20 +2,40 @@ import * as actionTypes from "./actionTypes";
 
 // SignUp action creators
 
-export const postUserData = () => {
+export const userSignupRequest = () => {
   return {
-    type: actionTypes.POST_USER_DATA,
+    type: actionTypes.USER_SIGNUP_REQUEST,
   };
 };
-export const postUserSuccess = (user) => {
+export const userSignupSuccess = (user) => {
   return {
-    type: actionTypes.POST_USER_SUCCESS,
+    type: actionTypes.USER_SIGNUP_SUCCESS,
     payload: user,
   };
 };
-export const postUserFailure = (error) => {
+export const userSignupFailure = (error) => {
   return {
-    type: actionTypes.POST_USER_FAILURE,
+    type: actionTypes.USER_SIGNUP_FAILURE,
+    payload: error,
+  };
+};
+
+// Login action creators
+
+export const userLoginRequest = () => {
+  return {
+    type: actionTypes.USER_LOGIN_REQUEST,
+  };
+};
+export const userLoginSuccess = (user) => {
+  return {
+    type: actionTypes.USER_LOGIN_SUCCESS,
+    payload: user,
+  };
+};
+export const userLoginFailure = (error) => {
+  return {
+    type: actionTypes.USER_LOGIN_FAILURE,
     payload: error,
   };
 };

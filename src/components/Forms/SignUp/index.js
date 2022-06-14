@@ -1,12 +1,13 @@
 import React from "react";
 import useInput from "hooks/use-input";
-import { Avatar, Paper, Stack, TextField, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
-import "./SignUp.css";
-import { signUp } from "actions/Auth/authActions";
 import { useDispatch } from "react-redux";
+import { Avatar, Paper, Stack, TextField, Button, Box } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { signUp } from "actions/Auth/authActions";
+import "./SignUp.css";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     value: enteredUserName,
@@ -41,10 +42,10 @@ const SignUpPage = () => {
   const signupHandler = (e) => {
     e.preventDefault();
     dispatch(signUp(userData));
-    signUp(userData);
     resetUserNameInput();
     resetEmailInput();
     resetPasswordInput();
+    navigate("/dashboard");
   };
 
   return (

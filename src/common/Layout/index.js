@@ -21,7 +21,12 @@ const Layout = (props) => {
     <Fragment>
       <Header showBackground={isScrolled} />
       <main
-        style={{ gridRow: "2 / 3 ", height: "100%", background: "#f7ebeb" }}
+        style={{
+          gridRow: "2 / 3 ",
+          height: "100%",
+          background: "#f7ebeb",
+          padding: ".5rem",
+        }}
       >
         {props.children}
       </main>
