@@ -43,10 +43,10 @@ const LogInPage = () => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    dispatch(signIn(userData));
+    dispatch(signIn(userData, navigate));
     resetEmailInput();
     resetPasswordInput();
-    navigate("/dashboard");
+    // navigate("/dashboard");
   };
 
   return (

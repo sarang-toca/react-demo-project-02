@@ -2,7 +2,7 @@ import api from "../../service/api";
 import { toast } from "react-toastify";
 import * as actions from "./index";
 
-export const signUp = (user) => {
+export const signUp = (user, navigate) => {
   return (dispatch) => {
     dispatch(actions.userSignupRequest());
     api
@@ -10,6 +10,7 @@ export const signUp = (user) => {
       .then((token) => {
         localStorage.setItem("token", token.data.tokens.access.token);
         dispatch(actions.userSignupSuccess(token));
+        navigate('/dashboard')
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -22,7 +23,7 @@ export const signUp = (user) => {
   };
 };
 
-export const signIn = (user) => {
+export const signIn = (user, navigate) => {
   return (dispatch) => {
     dispatch(actions.userLoginRequest());
     api
@@ -30,6 +31,7 @@ export const signIn = (user) => {
       .then((token) => {
         localStorage.setItem("token", token.data.tokens.access.token);
         dispatch(actions.userLoginSuccess(token));
+        navigate('/dashboard')
       })
       .catch((error) => {
         const errorMessage = error.message;

@@ -30,7 +30,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        isLoggedIn: true,
+        isLoggedIn: localStorage.getItem('token'),
         user: {
           id: user.id,
           name: user.name,

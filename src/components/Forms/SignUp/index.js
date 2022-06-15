@@ -41,11 +41,10 @@ const SignUpPage = () => {
 
   const signupHandler = (e) => {
     e.preventDefault();
-    dispatch(signUp(userData));
+    dispatch(signUp(userData, navigate));
     resetUserNameInput();
     resetEmailInput();
     resetPasswordInput();
-    navigate("/dashboard");
   };
 
   return (
