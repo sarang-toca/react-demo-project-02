@@ -40,6 +40,26 @@ export const userLoginFailure = (error) => {
   };
 };
 
+// loadUser action creators
+
+export const loadUserRequest = () => {
+  return {
+    type: actionTypes.USER_RELOAD_REQUEST,
+  };
+};
+export const loadUserSuccess = (user) => {
+  return {
+    type: actionTypes.USER_RELOAD_SUCCESS,
+    payload: user,
+  };
+};
+export const loadUserFailure = (error) => {
+  return {
+    type: actionTypes.USER_RELOAD_FAILURE,
+    payload: error,
+  };
+};
+
 // Logout action creators
 
 export const userLogout = () => {

@@ -9,7 +9,13 @@ export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_LOGIN_FAILURE = "USER_LOGIN_FAILURE";
 
-// Logout action type
+// loadUser action type
+
+export const USER_RELOAD_REQUEST = "USER_RELOAD_REQUEST"; 
+export const USER_RELOAD_SUCCESS = "USER_RELOAD_SUCCESS"; 
+export const USER_RELOAD_FAILURE = "USER_RELOAD_FAILURE"; 
+
+// LogOut action type
 
 export const USER_LOGOUT = "USER_LOGOUT";
 
