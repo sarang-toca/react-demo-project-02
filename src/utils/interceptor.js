@@ -4,7 +4,7 @@ export function interceptor() {
   const localToken = localStorage.getItem("token");
   api.interceptors.request.use((config) => {
     if (localToken) {
-      config.headers.Authorization = `JWT ${localToken}`;
+      config.headers.Authorization = `Bearer ${localToken}`;
     }
     return config;
   });

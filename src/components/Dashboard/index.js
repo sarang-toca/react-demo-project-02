@@ -1,7 +1,8 @@
 import { Paper, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import React from "react";
-import "./userDashboard.css";
+import "./Dashboard.css";
+import AdminDashboard from "./AdminDashboard";
 
 const UserDashboard = () => {
   const user = useSelector((state) => state.auth.user);
@@ -17,7 +18,8 @@ const UserDashboard = () => {
       }}
     >
       <Stack direction={"column"}>
-        <h1>{`Welcome, ${user.name} !`}</h1>
+        <h1>{`Welcome, ${user.name} (${user.role}) !`}</h1>
+        {user.role === "admin" && <AdminDashboard />}
       </Stack>
     </Paper>
   );

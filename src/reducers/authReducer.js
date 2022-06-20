@@ -24,10 +24,25 @@ const authReducer = (state = initialState, action) => {
         loading: true,
       };
     case actionTypes.USER_SIGNUP_SUCCESS:
-    case actionTypes.USER_RELOAD_SUCCESS:
     case actionTypes.USER_LOGIN_SUCCESS: {
       const token = action.payload.data.tokens.access.token;
       const user = action.payload.data.user;
+      return {
+        ...state,
+        loading: false,
+        isLoggedIn: !!localStorage.getItem("token"),
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          token,
+        },
+      };
+    }
+    case actionTypes.USER_RELOAD_SUCCESS: {
+      const token = localStorage.getItem("token");
+      const user = action.payload;
       return {
         ...state,
         loading: false,

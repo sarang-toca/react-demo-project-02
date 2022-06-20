@@ -47,10 +47,10 @@ export const loadUserRequest = () => {
     type: actionTypes.USER_RELOAD_REQUEST,
   };
 };
-export const loadUserSuccess = (user) => {
+export const loadUserSuccess = (token) => {
   return {
     type: actionTypes.USER_RELOAD_SUCCESS,
-    payload: user,
+    payload: token,
   };
 };
 export const loadUserFailure = (error) => {

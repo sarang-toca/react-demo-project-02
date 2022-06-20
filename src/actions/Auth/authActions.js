@@ -1,4 +1,5 @@
 import api from "../../service/api";
+import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 import * as actions from "./index";
 
@@ -46,7 +47,7 @@ export const signIn = (user, navigate) => {
   };
 };
 
-export const loadUser = (refreshToken, navigate) => {
+export const loadUser = (refreshToken) => {
   return (dispatch) => {
     dispatch(actions.loadUserRequest());
     api
@@ -54,8 +55,15 @@ export const loadUser = (refreshToken, navigate) => {
       .then((token) => {
         localStorage.setItem("token", token.data.access.token);
         localStorage.setItem("refreshToken", token.data.refresh.token);
-        dispatch(actions.loadUserSuccess(token));
-        navigate("/dashboard");
+        const { sub: userId } = jwtDecode(token.data.access.token);
+        console.log(userId);
+        const loadUserDetails = (userId) => {
+          api.get(`v1/users/${userId}`).then((user) => {
+            console.log(user.data);
+            dispatch(actions.loadUserSuccess(user.data));
+          });
+        };
+        loadUserDetails(userId);
       })
       .catch((error) => {
         const errorMessage = error.message;

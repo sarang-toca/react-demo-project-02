@@ -8,10 +8,11 @@ import UserDashboard from "components/Dashboard";
 import { PrivateRoute } from "utils/privateRoute";
 import { loadUser } from "actions/Auth/authActions";
 import { useDispatch, useSelector } from "react-redux";
+import AdminControlForm from "components/Forms/Admin";
 
 export default function App() {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const refreshToken = {
     refreshToken: localStorage.getItem("refreshToken"),
@@ -32,6 +33,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <UserDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin-control"
+          element={
+            <PrivateRoute>
+              <AdminControlForm />
             </PrivateRoute>
           }
         />
