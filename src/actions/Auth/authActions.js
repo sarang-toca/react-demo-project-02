@@ -1,15 +1,18 @@
 import api from "../../service/api";
+import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 import * as actions from "./index";
 
-export const signUp = (user) => {
+export const signUp = (user, navigate) => {
   return (dispatch) => {
     dispatch(actions.userSignupRequest());
     api
       .post(`v1/auth/register`, user)
       .then((token) => {
         localStorage.setItem("token", token.data.tokens.access.token);
+        localStorage.setItem("refreshToken", token.data.tokens.refresh.token);
         dispatch(actions.userSignupSuccess(token));
+        navigate("/dashboard");
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -22,14 +25,16 @@ export const signUp = (user) => {
   };
 };
 
-export const signIn = (user) => {
+export const signIn = (user, navigate) => {
   return (dispatch) => {
     dispatch(actions.userLoginRequest());
     api
       .post(`v1/auth/login`, user)
       .then((token) => {
         localStorage.setItem("token", token.data.tokens.access.token);
+        localStorage.setItem("refreshToken", token.data.tokens.refresh.token);
         dispatch(actions.userLoginSuccess(token));
+        navigate("/dashboard");
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -42,8 +47,38 @@ export const signIn = (user) => {
   };
 };
 
-export const logOut = () => {
+export const loadUser = (refreshToken) => {
+  return (dispatch) => {
+    dispatch(actions.loadUserRequest());
+    api
+      .post(`v1/auth/refresh-tokens`, refreshToken)
+      .then((token) => {
+        localStorage.setItem("token", token.data.access.token);
+        localStorage.setItem("refreshToken", token.data.refresh.token);
+        const { sub: userId } = jwtDecode(token.data.access.token);
+        console.log(userId);
+        const loadUserDetails = (userId) => {
+          api.get(`v1/users/${userId}`).then((user) => {
+            console.log(user.data);
+            dispatch(actions.loadUserSuccess(user.data));
+          });
+        };
+        loadUserDetails(userId);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        dispatch(actions.loadUserFailure(errorMessage));
+        toast.error(error.errorMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
+  };
+};
+
+export const logOut = (refreshToken) => {
   localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("redux");
   return (dispatch) => {
     dispatch(actions.userLogout());
   };

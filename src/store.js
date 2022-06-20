@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from "redux";
-import persistState from "redux-localstorage";
+// import persistState from "redux-localstorage";
 import rootReducer from "reducers/rootReducer";
 import thunk from "redux-thunk";
 const composeEnhancers =
@@ -13,7 +13,9 @@ const composeEnhancers =
 export default function configureStore() {
   const store = createStore(
     rootReducer,
-    composeEnhancers(applyMiddleware(thunk), persistState("auth"))
+    composeEnhancers(applyMiddleware(thunk), 
+    // persistState("auth")
+    )
   );
   return store;
 }
